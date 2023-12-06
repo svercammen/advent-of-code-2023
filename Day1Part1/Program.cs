@@ -7,14 +7,14 @@ namespace Day1Part1;
 
 [MinIterationCount(5)]
 [MaxIterationCount(10)]
-public class Program
+public partial class Program
 {
     public static void Main(string[] args)
     {
         Console.WriteLine("Day 1 part 1");
 #if DEBUG
-        new Program().ChallengeLoopVariant(args.FirstOrDefault());
-        new Program().ChallengeRegexVariant(args.FirstOrDefault());
+        new Program().ChallengeLoopVariant(args.Length > 0 ? args : null);
+        new Program().ChallengeRegexVariant(args.Length > 0 ? args : null);
 #else
         BenchmarkRunner.Run<Program>();
 #endif
@@ -35,9 +35,9 @@ public class Program
         return int.Parse(firstDigit + lastDigit);
     }
 
-    public void ChallengeLoopVariant(string? filepath)
+    public void ChallengeLoopVariant(string[]? args)
     {
-        var sum = FileReader.Lines(filepath).Sum(CalibrationValueLoopVariant);
+        var sum = FileReader.Lines(args).Sum(CalibrationValueLoopVariant);
         Console.WriteLine($"Using the loop variant: {sum}");
     }
 
@@ -55,9 +55,9 @@ public class Program
         return int.Parse(matches[0].Groups[0].Value + matches[^1].Groups[0].Value);
     }
 
-    public void ChallengeRegexVariant(string? filepath)
+    public void ChallengeRegexVariant(string[]? args)
     {
-        var sum = FileReader.Lines(filepath).Sum(CalibrationValueRegexVariant);
+        var sum = FileReader.Lines(args).Sum(CalibrationValueRegexVariant);
         Console.WriteLine($"Using the regex variant: {sum}");
     }
 

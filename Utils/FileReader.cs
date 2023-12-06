@@ -2,15 +2,13 @@
 
 public class FileReader
 {
-    public static IEnumerable<string> Lines(string? path)
+    public static IEnumerable<string> Lines(string[]? inputPaths)
     {
-        string[] paths = path != null
-            ? [path]
-            : [
-                "input.txt",    // dotnet watch
-                "../../../../../../../input.txt",   // benchmark runner
-                "../../input.txt"   // debugger
-            ];
+        string[] paths = inputPaths ?? [
+            "input.txt",    // dotnet watch
+            "../../../../../../../input.txt",   // benchmark runner
+            "../../../input.txt"   // debugger
+        ];
         
         var file = paths.FirstOrDefault(File.Exists);
         if (file == null)
