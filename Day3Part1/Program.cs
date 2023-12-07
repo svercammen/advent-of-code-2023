@@ -50,10 +50,9 @@ public class Program
         }
     }
 
-    private IEnumerable<char> GetAdjacentCharacters(List<string> schematic, int lineIdx, int startPosition, int length)
+    private IEnumerable<string> GetAdjacentCharactersLists(List<string> schematic, int lineIdx, int startPosition, int length)
     {
-        return GetAdjacentStrings(schematic, lineIdx, startPosition, length)
-            .SelectMany(substring => substring.ToCharArray());
+        return GetAdjacentStrings(schematic, lineIdx, startPosition, length);
     }
     
     private IEnumerable<int> GetPartNumbers(List<string> schematic)
@@ -74,11 +73,9 @@ public class Program
 
                 var length = j - i;
                 var partNumber = line.Substring(i, length);
-                var adjacentCharacters = GetAdjacentCharacters(schematic, lineIdx, i, length);
-                // var adjacentCharacters = GetAdjacentStrings(schematic, lineIdx, i, length);
-                // Console.WriteLine($"from {i} to {j-1}, partnumber {partNumber}, adjacent characters are `{string.Join(", ", adjacentCharacters)}`");
+                var adjacentCharactersList = GetAdjacentCharactersLists(schematic, lineIdx, i, length);
 
-                if (adjacentCharacters.Any(c => c != '.' && !char.IsNumber(c)))
+                if (adjacentCharactersList.Any(adjacentCharacters => adjacentCharacters.Any(c => c != '.' && !char.IsNumber(c))))
                 {
                     yield return int.Parse(partNumber);
                 }
